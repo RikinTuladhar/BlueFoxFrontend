@@ -67,7 +67,7 @@ const Page = () => {
               Headphones For You!
             </h1>
             <div className="grid w-full grid-cols-1 gap-10 px-10 py-10 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 place-items-center">
-              {products.map((product, i) => (
+              {products?.map((product, i) => (
                 <Link href={`product/${product?._id}`} key={i}>
                   <ProductCard product={product} />
                 </Link>

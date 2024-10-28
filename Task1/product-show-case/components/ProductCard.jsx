@@ -28,7 +28,7 @@ const ProductCard = ({ product }) => {
         <div className="flex w-full gap-1 px-2 py-2">
           {" "}
           {product?.rating &&
-            Array.from({ length: product?.rating }).map((_, i) => (
+            Array.from({ length: product?.rating })?.map((_, i) => (
               <Star fill="true" size={15} color="green" key={i} />
             ))}
         </div>

@@ -66,7 +66,7 @@ const page = () => {
             >
               Show All
             </div>
-            {categories.map((category, i) => (
+            {categories?.map((category, i) => (
               <div
                 key={i}
                 onClick={(e) => handleCategoryFilter(category.name)}
