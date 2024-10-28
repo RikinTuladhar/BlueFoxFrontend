@@ -14,12 +14,13 @@ const page = () => {
   const [filtering, setFiltering] = useState([]);
   console.log(products);
   useEffect(() => {
-    if (window.innerWidth < 500) {
-      setMobileView(true);
-    } else {
-      setMobileView(false);
-    }
-  }, [window.innerWidth]);
+    const handleResize = () => {
+      setMobileView(window.innerWidth < 500);
+    };
+    handleResize(); // Check on mount
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   useEffect(() => {
     async function fetchCategories() {
       const res = await fetch("/api/categories");
@@ -58,8 +59,8 @@ const page = () => {
           <div className="w-full h-full px-2 py-2 space-y-2 text-xl">
             <div
               onClick={(e) => {
-                setProductNotFound(false)
-                setFiltering([])
+                setProductNotFound(false);
+                setFiltering([]);
               }}
               className="px-5 cursor-pointer py-3 border transition-all delay-75 ease-in hover:bg-[#f2f2f2f2] rounded-2xl"
             >
