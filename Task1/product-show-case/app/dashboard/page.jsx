@@ -4,9 +4,11 @@ import Navbar from "@/components/Navbar";
 import ProductCard from "@/components/ProductCard";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import { ThreeDots } from "react-loader-spinner";
 
 const Page = () => {
   const [mobileView, setMobileView] = useState(false);
+  const [loadingProducts, setLoadingProducts] = useState(true);
   const [products, setProducts] = useState([]);
 
   // Update mobile view state based on window width
@@ -16,7 +18,7 @@ const Page = () => {
     };
 
     // Set initial value
-    handleResize(); 
+    handleResize();
     window.addEventListener("resize", handleResize);
 
     // Cleanup on unmount
@@ -29,6 +31,7 @@ const Page = () => {
       const response = await fetch("/api/product");
       const data = await response.json();
       setProducts(data);
+      setLoadingProducts(false);
     }
     fetchAllProducts();
   }, []);
@@ -66,6 +69,20 @@ const Page = () => {
             <h1 className="pl-5 text-2xl font-semibold md:pl-0 md:text-3xl">
               Headphones For You!
             </h1>
+            {loadingProducts && (
+              <div className="flex items-center justify-center w-full">
+                <ThreeDots
+                  visible={true}
+                  height="80"
+                  width="80"
+                  color="#4fa94d"
+                  radius="9"
+                  ariaLabel="three-dots-loading"
+                  wrapperStyle={{}}
+                  wrapperClass=""
+                />
+              </div>
+            )}
             <div className="grid w-full grid-cols-1 gap-10 px-10 py-10 space-y-10 md:space-y-0 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 place-items-center">
               {products?.map((product, i) => (
                 <Link href={`product/${product?._id}`} key={i}>

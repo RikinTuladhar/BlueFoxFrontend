@@ -5,7 +5,7 @@ import ProductCard from "@/components/ProductCard";
 import { AArrowDown } from "lucide-react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-
+import { ThreeDots } from "react-loader-spinner";
 const page = () => {
   const [mobileView, setMobileView] = useState(false);
   const [productNotFoun, setProductNotFound] = useState(false);
@@ -28,14 +28,14 @@ const page = () => {
       const res = await fetch("/api/categories");
       const data = await res.json();
       setCategories(data);
-      setLoadingCategories(false)
+      setLoadingCategories(false);
     }
 
     async function fetchProducts() {
       const res = await fetch("/api/product");
       const data = await res.json();
       setProducts(data);
-      setLoadingProducts(false)
+      setLoadingProducts(false);
     }
 
     fetchCategories();
@@ -70,7 +70,21 @@ const page = () => {
             >
               Show All
             </div>
-            {loadingCategories && <div>Loading Categoires</div>}
+
+            {loadingCategories && (
+              <div className="flex items-center justify-center w-full">
+                <ThreeDots
+                  visible={true}
+                  height="80"
+                  width="80"
+                  color="#4fa94d"
+                  radius="9"
+                  ariaLabel="three-dots-loading"
+                  wrapperStyle={{}}
+                  wrapperClass=""
+                />
+              </div>
+            )}
             {categories?.map((category, i) => (
               <div
                 key={i}
@@ -84,8 +98,21 @@ const page = () => {
         </div>
         <div className="w-full md:w-[70%] px-5 py-5 min-h-[80vh] h-full ">
           <h2 className="text-3xl text-center ">Shop : Regular HeadPhones</h2>
+          {loadingProducts && (
+            <div className="flex items-center justify-center w-full">
+              <ThreeDots
+                visible={true}
+                height="80"
+                width="80"
+                color="#4fa94d"
+                radius="9"
+                ariaLabel="three-dots-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+              />
+            </div>
+          )}
           <div className="grid grid-cols-1 gap-10 px-5 py-5 mt-10 space-y-10 md:space-y-0 md:grid-cols-2 place-items-center ">
-            {loadingProducts && <div>Loading Products..</div>}
             {filtering.length > 0 ? (
               filtering?.map((product, i) => (
                 <Link key={i} href={`product/${product?._id}`}>
