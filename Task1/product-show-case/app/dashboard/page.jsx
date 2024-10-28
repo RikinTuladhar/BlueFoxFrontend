@@ -5,32 +5,41 @@ import ProductCard from "@/components/ProductCard";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
-const page = () => {
+const Page = () => {
   const [mobileView, setMobileView] = useState(false);
   const [products, setProducts] = useState([]);
-  console.log(products)
+
+  // Update mobile view state based on window width
   useEffect(() => {
-    if (window.innerWidth < 500) {
-      setMobileView(true);
-    } else {
-      setMobileView(false);
-    }
-  }, [window.innerWidth]);
+    const handleResize = () => {
+      setMobileView(window.innerWidth < 500);
+    };
+
+    // Set initial value
+    handleResize(); 
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup on unmount
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Fetch all products
   useEffect(() => {
-    async function fetchAllProducts(params) {
-      const products = await fetch("/api/product");
-      const data = await products.json();
+    async function fetchAllProducts() {
+      const response = await fetch("/api/product");
+      const data = await response.json();
       setProducts(data);
     }
     fetchAllProducts();
   }, []);
+
   return (
     <>
       {mobileView ? <MovileNavbar /> : <Navbar />}
       <div className="w-full min-h-screen font-sans md:px-10">
-        {/* first section  */}
-        <section className="w-full  flex-wrap flex justify-around relative  bg-[#FBF0E4] md:h-[20rem]">
-          <div className="w-full py-10 md:py-0 md:w-[50%] space-y-5  h-full flex-wrap flex flex-col justify-center items-center ">
+        {/* First section */}
+        <section className="w-full flex-wrap flex justify-around relative bg-[#FBF0E4] md:h-[20rem]">
+          <div className="w-full py-10 md:py-0 md:w-[50%] space-y-5 h-full flex-wrap flex flex-col justify-center items-center ">
             <h2 className="text-2xl md:text-5xl font-semibold text-[#003D29]">
               Grab Upto 50% Off On <br /> Selected Headphone
             </h2>
@@ -51,7 +60,7 @@ const page = () => {
           </div>
         </section>
 
-        {/* second section  */}
+        {/* Second section */}
         <section className="w-full min-h-screen py-10">
           <div className="w-full ">
             <h1 className="pl-5 text-2xl font-semibold md:pl-0 md:text-3xl">
@@ -71,4 +80,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
