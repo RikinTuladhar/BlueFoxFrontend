@@ -10,7 +10,7 @@ export async function GET() {
   } catch (error) {
     console.log(error);
     return NextResponse.json(
-      { message: "Error when fetching products" },
+      { message: "Error when fetching products",error },
       { status: 500 }
     );
   }
@@ -34,7 +34,7 @@ export async function POST(req) {
   } catch (error) {
     console.log(error);
     return NextResponse.json(
-      { message: "Error when creating products" },
+      { message: "Error when creating products",error },
       { status: 500 }
     );
   }
