@@ -10,6 +10,8 @@ const page = () => {
   const [mobileView, setMobileView] = useState(false);
   const [productNotFoun, setProductNotFound] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [loadingCategories, setLoadingCategories] = useState(true);
+  const [loadingProducts, setLoadingProducts] = useState(true);
   const [products, setProducts] = useState([]);
   const [filtering, setFiltering] = useState([]);
   console.log(products);
@@ -26,12 +28,14 @@ const page = () => {
       const res = await fetch("/api/categories");
       const data = await res.json();
       setCategories(data);
+      setLoadingCategories(false)
     }
 
     async function fetchProducts() {
       const res = await fetch("/api/product");
       const data = await res.json();
       setProducts(data);
+      setLoadingProducts(false)
     }
 
     fetchCategories();
@@ -53,7 +57,7 @@ const page = () => {
   return (
     <>
       {mobileView ? <MovileNavbar /> : <Navbar />}
-      <section className="flex flex-wrap justify-between w-full min-h-screen px-10 ">
+      <section className="flex flex-wrap justify-between w-full min-h-screen px-10 pb-10 ">
         <div className="w-full md:w-[30%] h-full md:min-h-[80vh] py-10 px-2 ">
           <h2 className="pb-5 text-3xl">Categories</h2>
           <div className="w-full h-full px-2 py-2 space-y-2 text-xl">
@@ -66,6 +70,7 @@ const page = () => {
             >
               Show All
             </div>
+            {loadingCategories && <div>Loading Categoires</div>}
             {categories?.map((category, i) => (
               <div
                 key={i}
@@ -79,7 +84,8 @@ const page = () => {
         </div>
         <div className="w-full md:w-[70%] px-5 py-5 min-h-[80vh] h-full ">
           <h2 className="text-3xl text-center ">Shop : Regular HeadPhones</h2>
-          <div className="grid grid-cols-1 gap-10 px-5 py-5 mt-10 md:grid-cols-2 place-items-center ">
+          <div className="grid grid-cols-1 gap-10 px-5 py-5 mt-10 space-y-10 md:space-y-0 md:grid-cols-2 place-items-center ">
+            {loadingProducts && <div>Loading Products..</div>}
             {filtering.length > 0 ? (
               filtering?.map((product, i) => (
                 <Link key={i} href={`product/${product?._id}`}>
