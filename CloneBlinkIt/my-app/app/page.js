@@ -1,12 +1,32 @@
+"use client";
 import MobileNavbar from "@/components/MobileNavbar";
 import Navbar from "@/components/Navbar";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [movieView, setMobileView] = useState(true);
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 500) {
+        setMobileView(true);
+      } else {
+        setMobileView(false);
+      }
+    };
+
+    // Set initial value
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup on unmount
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+  console.log(movieView, "Inner width", window.innerWidth);
   return (
     <>
-      {/* <Navbar /> */}
-      <MobileNavbar/>
+      {movieView ? <MobileNavbar /> : <Navbar />}
+
       {/* section one  */}
       <section className="hidden md:block w-full min-h-screen px-5">
         <div className="w-full h-[14rem] ">
