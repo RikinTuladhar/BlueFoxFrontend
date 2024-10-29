@@ -8,16 +8,20 @@ export default function Home() {
   const [movieView, setMobileView] = useState(true);
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 500) {
-        setMobileView(true);
-      } else {
-        setMobileView(false);
+      if (typeof window !== "undefined") {
+        if (window.innerWidth < 500) {
+          setMobileView(true);
+        } else {
+          setMobileView(false);
+        }
       }
     };
 
     // Set initial value
-    handleResize();
-    window.addEventListener("resize", handleResize);
+    if (typeof window !== "undefined") {
+      handleResize();
+      window.addEventListener("resize", handleResize);
+    }
 
     // Cleanup on unmount
     return () => window.removeEventListener("resize", handleResize);
