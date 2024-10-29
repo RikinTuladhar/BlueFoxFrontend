@@ -1,8 +1,8 @@
 import React from "react";
 
-const ThridSectionCard = ({ item }) => {
+const Card = ({ item }) => {
   return (
-    <div className="w-[178px] rounded-lg h-[272px] border ">
+    <div className="w-[178px] rounded-lg pb-3 border ">
       <div className="w-full h-[50%] overflow-hidden bg-[#FEFFFE]">
         <img src={item?.img} className="w-full object-contain h-full" alt="" />
       </div>
@@ -20,4 +20,4 @@ const ThridSectionCard = ({ item }) => {
   );
 };
 
-export default ThridSectionCard;
+export default Card;

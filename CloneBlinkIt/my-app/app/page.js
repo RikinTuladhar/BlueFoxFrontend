@@ -1,5 +1,6 @@
 "use client";
-import ThridSectionCard from "@/components/cards/ThridSectionCard";
+import Card from "@/components/cards/CardHome";
+import Footer from "@/components/Footer";
 import MobileNavbar from "@/components/MobileNavbar";
 import Navbar from "@/components/Navbar";
 import { useEffect, useState } from "react";
@@ -149,6 +150,123 @@ export default function Home() {
     },
   ]);
 
+  const [forthSectionCards, setforthSectionCards] = useState([
+    {
+      id: 1,
+      img: "/forthSectionImage.avif",
+      name: "Perfect Rolled Cones",
+      gram: 400,
+      price: 35,
+    },
+    {
+      id: 1,
+      img: "/forthSectionImage.avif",
+      name: "Amul Masti Curd",
+      gram: 400,
+      price: 35,
+    },
+    {
+      id: 1,
+      img: "/forthSectionImage.avif",
+      name: "Amul Masti Curd",
+      gram: 400,
+      price: 35,
+    },
+    {
+      id: 1,
+      img: "/forthSectionImage.avif",
+      name: "Amul Masti Curd",
+      gram: 400,
+      price: 35,
+    },
+    {
+      id: 1,
+      img: "/forthSectionImage.avif",
+      name: "Amul Masti Curd",
+      gram: 400,
+      price: 35,
+    },
+    {
+      id: 1,
+      img: "/forthSectionImage.avif",
+      name: "Amul Masti Curd",
+      gram: 400,
+      price: 35,
+    },
+    {
+      id: 1,
+      img: "/forthSectionImage.avif",
+      name: "Amul Masti Curd",
+      gram: 400,
+      price: 35,
+    },
+    {
+      id: 1,
+      img: "/forthSectionImage.avif",
+      name: "Amul Masti Curd",
+      gram: 400,
+      price: 35,
+    },
+  ]);
+  const [fifthSectionCards, setfifthSectionCards] = useState([
+    {
+      id: 1,
+      img: "/fifthImageCard1.avif",
+      name: "Perfect Rolled Cones",
+      gram: 400,
+      price: 35,
+    },
+    {
+      id: 1,
+      img: "/fifthImageCard1.avif",
+      name: "Amul Masti Curd",
+      gram: 400,
+      price: 35,
+    },
+    {
+      id: 1,
+      img: "/fifthImageCard1.avif",
+      name: "Amul Masti Curd",
+      gram: 400,
+      price: 35,
+    },
+    {
+      id: 1,
+      img: "/fifthImageCard1.avif",
+      name: "Amul Masti Curd",
+      gram: 400,
+      price: 35,
+    },
+    {
+      id: 1,
+      img: "/fifthImageCard1.avif",
+      name: "Amul Masti Curd",
+      gram: 400,
+      price: 35,
+    },
+    {
+      id: 1,
+      img: "/fifthImageCard1.avif",
+      name: "Amul Masti Curd",
+      gram: 400,
+      price: 35,
+    },
+    {
+      id: 1,
+      img: "/fifthImageCard1.avif",
+      name: "Amul Masti Curd",
+      gram: 400,
+      price: 35,
+    },
+    {
+      id: 1,
+      img: "/fifthImageCard1.avif",
+      name: "Amul Masti Curd",
+      gram: 400,
+      price: 35,
+    },
+  ]);
+
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 500) {
@@ -249,18 +367,45 @@ export default function Home() {
         </section>
       )}
       {/* section third */}
-      <section className="w-full space-y-5  py-10 px-10">
-        <h1 className="text-[24px] font-semibold">Dairy, Bread & Eggs</h1>
-        <div className="w-full flex gap-5 ">
+      <section className="w-full space-y-5  py-10 pl-[4.5rem] pr-[2.5rem] md:px-10">
+        <h1 className="text-[24px] font-semibold">Rolling paper</h1>
+        <div className="w-full flex   gap-10 md:gap-5">
           <div className="w-full overflow-hidden">
             <Carousel responsive={responsive}>
               {thirdSectionCards.map((item, i) => (
-                <ThridSectionCard item={item} key={i} />
+                <Card item={item} key={i} />
               ))}
             </Carousel>
           </div>
         </div>
       </section>
+      {/* section forth */}
+      <section className="w-full space-y-5  py-10 pl-[4.5rem] pr-[2.5rem] md:px-10">
+        <h1 className="text-[24px] font-semibold">Dairy, Bread & Eggs</h1>
+        <div className="w-full flex gap-5 ">
+          <div className="w-full overflow-hidden">
+            <Carousel responsive={responsive}>
+              {forthSectionCards.map((item, i) => (
+                <Card item={item} key={i} />
+              ))}
+            </Carousel>
+          </div>
+        </div>
+      </section>
+      {/* section fifth */}
+      <section className="w-full space-y-5  py-10 pl-[4.5rem] pr-[2.5rem] md:px-10">
+        <h1 className="text-[24px] font-semibold">Mouth fresheners</h1>
+        <div className="w-full flex gap-5 ">
+          <div className="w-full overflow-hidden">
+            <Carousel responsive={responsive}>
+              {fifthSectionCards.map((item, i) => (
+                <Card item={item} key={i} />
+              ))}
+            </Carousel>
+          </div>
+        </div>
+      </section>
+      <Footer />
     </>
   );
 }
