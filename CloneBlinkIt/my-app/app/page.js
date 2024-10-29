@@ -1,37 +1,35 @@
 "use client";
 import MobileNavbar from "@/components/MobileNavbar";
 import Navbar from "@/components/Navbar";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 
 export default function Home() {
   const [movieView, setMobileView] = useState(true);
+
   useEffect(() => {
     const handleResize = () => {
-      if (typeof window !== "undefined") {
-        if (window.innerWidth < 500) {
-          setMobileView(true);
-        } else {
-          setMobileView(false);
-        }
+      if (window.innerWidth < 500) {
+        setMobileView(true);
+      } else {
+        setMobileView(false);
       }
     };
 
     // Set initial value
-    if (typeof window !== "undefined") {
-      handleResize();
-      window.addEventListener("resize", handleResize);
-    }
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    console.log(movieView, "Inner width", window.innerWidth); // Moved inside useEffect
 
     // Cleanup on unmount
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
-  console.log(movieView, "Inner width", window.innerWidth);
+  }, [movieView]); // Added movieView as a dependency
+
   return (
     <>
       {movieView ? <MobileNavbar /> : <Navbar />}
 
-      {/* section one  */}
+      {/* Section one */}
       <section className="hidden md:block w-full min-h-screen px-5">
         <div className="w-full h-[14rem] ">
           <img src="/homeimg1.webp" className="w-full h-full" alt="image" />
