@@ -1,6 +1,7 @@
 "use client";
 import Card from "@/components/cards/CardHome";
-import Footer from "@/components/Footer";
+import Footer from "@/components/footer/Footer";
+import MobileFooter from "@/components/footer/MobileFooter";
 import MobileNavbar from "@/components/MobileNavbar";
 import Navbar from "@/components/Navbar";
 import { useEffect, useState } from "react";
@@ -306,11 +307,11 @@ export default function Home() {
     <>
       {movieView ? <MobileNavbar /> : <Navbar />}
       {/* Section one */}
-      <section className="hidden md:block w-full py-5 px-5">
+      <section className="hidden w-full px-5 py-5 md:block">
         <div className="w-full h-[14rem] ">
           <img src="/homeimg1.webp" className="w-full h-full" alt="image" />
         </div>
-        <div className="w-full py-4 gap-5 px-5 flex ">
+        <div className="flex w-full gap-5 px-5 py-4 ">
           <div className="w-[22rem] h-[12rem] bg-red-400">
             <img
               src="/homeimgSmall1.avif"
@@ -336,7 +337,7 @@ export default function Home() {
       </section>
       {/* section second  */}
       {movieView ? (
-        <section className="w-full mt-16 md:mt-0 py-2   px-3 md:px-5  grid gap-2 grid-cols-4 md:grid-cols-10  ">
+        <section className="grid w-full grid-cols-4 gap-2 px-3 py-2 mt-16 md:mt-0 md:px-5 md:grid-cols-10 ">
           {movieViewItems.map((m, i) => (
             <div key={i}>
               <div className="w-[5rem] bg-[#E5F3F3]  rounded-xl  md:w-[8rem]  md:h-[12rem]">
@@ -351,7 +352,7 @@ export default function Home() {
           ))}
         </section>
       ) : (
-        <section className="w-full mt-16 md:mt-0 py-2  px-3 md:px-8  grid gap-2 grid-cols-4 md:grid-cols-10 place-items-center ">
+        <section className="grid w-full grid-cols-4 gap-2 px-3 py-2 mt-16 md:mt-0 md:px-8 md:grid-cols-10 place-items-center ">
           {Array.from({ length: 20 }).map((_, i) => (
             <div
               key={i}
@@ -369,7 +370,7 @@ export default function Home() {
       {/* section third */}
       <section className="w-full space-y-5  py-10 pl-[4.5rem] pr-[2.5rem] md:px-10">
         <h1 className="text-[24px] font-semibold">Rolling paper</h1>
-        <div className="w-full flex   gap-10 md:gap-5">
+        <div className="flex w-full gap-10 md:gap-5">
           <div className="w-full overflow-hidden">
             <Carousel responsive={responsive}>
               {thirdSectionCards.map((item, i) => (
@@ -382,7 +383,7 @@ export default function Home() {
       {/* section forth */}
       <section className="w-full space-y-5  py-10 pl-[4.5rem] pr-[2.5rem] md:px-10">
         <h1 className="text-[24px] font-semibold">Dairy, Bread & Eggs</h1>
-        <div className="w-full flex gap-5 ">
+        <div className="flex w-full gap-5 ">
           <div className="w-full overflow-hidden">
             <Carousel responsive={responsive}>
               {forthSectionCards.map((item, i) => (
@@ -395,7 +396,7 @@ export default function Home() {
       {/* section fifth */}
       <section className="w-full space-y-5  py-10 pl-[4.5rem] pr-[2.5rem] md:px-10">
         <h1 className="text-[24px] font-semibold">Mouth fresheners</h1>
-        <div className="w-full flex gap-5 ">
+        <div className="flex w-full gap-5 ">
           <div className="w-full overflow-hidden">
             <Carousel responsive={responsive}>
               {fifthSectionCards.map((item, i) => (
@@ -405,7 +406,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <Footer />
+      {movieView ? <MobileFooter/> :<Footer />  }
     </>
   );
 }

@@ -1,9 +1,10 @@
+
 import React from "react";
 
 const Footer = () => {
   return (
     <footer
-      className="w-full grid gap-x-10 h-[20rem] "
+      className="w-full grid gap-x-14 h-[20rem] "
       style={{
         gridTemplateColumns: "auto auto auto",
         gridTemplateRows: "auto auto",
@@ -11,7 +12,7 @@ const Footer = () => {
     >
       <div
         className="px-2 py-10 space-y-5 "
-        style={{ gridColumn: "1/2", gridRow: "1/5" }}
+        style={{ gridColumn: "1/2", gridRow: "1/6" }}
       >
         <h2 className="text-[18px] font-semibold">Useful Links</h2>
         <div className="flex justify-between w-full px-2">
@@ -48,18 +49,18 @@ const Footer = () => {
         </div>
       </div>
       <div
-        className="flex gap-5 pt-10 "
+        className="flex gap-5 pt-10 pb-5 "
         style={{ gridColumn: "2/5", gridRow: "1/1" }}
       >
         <h2 className="text-[18px] font-semibold">Categories</h2>
         <p className="text-[#0C831F]">see all</p>
       </div>
       <div
-        className="flex justify-between "
-        style={{ gridColumn: "2/5", gridRow: "2/5" }}
+        className="flex justify-between px-1 pb-10"
+        style={{ gridColumn: "2/5", gridRow: "2/6" }}
       >
         <div>
-          <ul className="text-[14px]  text-[#666]">
+          <ul className="text-[14px] space-y-2  text-[#666]">
             <li>Vegetables & Fruits</li>
             <li>Cold Drinks & Juices</li>
             <li>Bakery & Biscuits</li>
@@ -72,7 +73,7 @@ const Footer = () => {
           </ul>
         </div>
         <div>
-          <ul className="text-[14px]  text-[#666]">
+          <ul className="text-[14px]  space-y-2  text-[#666]">
             <li>Dairy & Breakfast</li>
             <li>Instant & Frozen Food</li>
             <li>Sweet Tooth</li>
@@ -85,7 +86,7 @@ const Footer = () => {
           </ul>
         </div>
         <div>
-          <ul className="text-[14px]  text-[#666]">
+          <ul className="text-[14px]  space-y-2  text-[#666]">
             <li>Munchies</li>
             <li>Tea, Coffee & Health Drinks</li>
             <li>Atta, Rice & Dal</li>
