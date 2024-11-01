@@ -306,107 +306,110 @@ export default function Home() {
   return (
     <>
       {movieView ? <MobileNavbar /> : <Navbar />}
-      {/* Section one */}
-      <section className="hidden w-full px-5 py-5 md:block">
-        <div className="w-full h-[14rem] ">
-          <img src="/homeimg1.webp" className="w-full h-full" alt="image" />
-        </div>
-        <div className="flex w-full gap-5 px-5 py-4 ">
-          <div className="w-[22rem] h-[12rem] bg-red-400">
-            <img
-              src="/homeimgSmall1.avif"
-              className="w-full h-full"
-              alt="Image of small card"
-            />
+
+      <div className="w-full pt-20">
+        {/* Section one */}
+        <section className="hidden w-full px-5 py-5 md:block">
+          <div className="w-full h-[14rem] ">
+            <img src="/homeimg1.webp" className="w-full h-full" alt="image" />
           </div>
-          <div className="w-[22rem] h-[12rem] bg-red-400">
-            <img
-              src="/homeimgSmall2.avif"
-              className="w-full h-full"
-              alt="Image of small card"
-            />
+          <div className="flex w-full gap-5 px-5 py-4 ">
+            <div className="w-[22rem] h-[12rem] bg-red-400">
+              <img
+                src="/homeimgSmall1.avif"
+                className="w-full h-full"
+                alt="Image of small card"
+              />
+            </div>
+            <div className="w-[22rem] h-[12rem] bg-red-400">
+              <img
+                src="/homeimgSmall2.avif"
+                className="w-full h-full"
+                alt="Image of small card"
+              />
+            </div>
+            <div className="w-[22rem] h-[12rem] bg-red-400">
+              <img
+                src="/homeimgSmall3.avif"
+                className="w-full h-full"
+                alt="Image of small card"
+              />
+            </div>
           </div>
-          <div className="w-[22rem] h-[12rem] bg-red-400">
-            <img
-              src="/homeimgSmall3.avif"
-              className="w-full h-full"
-              alt="Image of small card"
-            />
-          </div>
-        </div>
-      </section>
-      {/* section second  */}
-      {movieView ? (
-        <section className="grid w-full grid-cols-4 gap-2 px-3 py-2 mt-16 md:mt-0 md:px-5 md:grid-cols-10 ">
-          {movieViewItems.map((m, i) => (
-            <div key={i}>
-              <div className="w-[5rem] bg-[#E5F3F3]  rounded-xl  md:w-[8rem]  md:h-[12rem]">
+        </section>
+        {/* section second  */}
+        {movieView ? (
+          <section className="grid w-full grid-cols-4 gap-2 px-3 py-2 mt-16 md:mt-0 md:px-5 md:grid-cols-10 ">
+            {movieViewItems.map((m, i) => (
+              <div key={i}>
+                <div className="w-[5rem] bg-[#E5F3F3]  rounded-xl  md:w-[8rem]  md:h-[12rem]">
+                  <img
+                    src={m.url}
+                    className="w-full h-full"
+                    alt="Image of card "
+                  />
+                </div>
+                <p className="text-[13px] font-semibold">{m.title}</p>
+              </div>
+            ))}
+          </section>
+        ) : (
+          <section className="grid w-full grid-cols-4 gap-2 px-3 py-2 mt-16 md:mt-0 md:px-8 md:grid-cols-10 place-items-center ">
+            {Array.from({ length: 20 }).map((_, i) => (
+              <div
+                key={i}
+                className="w-[7rem] h-[8rem] md:w-[8rem]  md:h-[12rem]"
+              >
                 <img
-                  src={m.url}
+                  src={`/smItem${i + 1}.avif`}
                   className="w-full h-full"
                   alt="Image of card "
                 />
               </div>
-              <p className="text-[13px] font-semibold">{m.title}</p>
+            ))}
+          </section>
+        )}
+        {/* section third */}
+        <section className="w-full space-y-5  py-10 pl-[4.5rem] pr-[2.5rem] md:px-10">
+          <h1 className="text-[24px] font-semibold">Dairy, Bread & Eggs</h1>
+          <div className="flex w-full gap-10 md:gap-5">
+            <div className="w-full overflow-hidden">
+              <Carousel responsive={responsive}>
+                {thirdSectionCards.map((item, i) => (
+                  <Card item={item} key={i} />
+                ))}
+              </Carousel>
             </div>
-          ))}
+          </div>
         </section>
-      ) : (
-        <section className="grid w-full grid-cols-4 gap-2 px-3 py-2 mt-16 md:mt-0 md:px-8 md:grid-cols-10 place-items-center ">
-          {Array.from({ length: 20 }).map((_, i) => (
-            <div
-              key={i}
-              className="w-[7rem] h-[8rem] md:w-[8rem]  md:h-[12rem]"
-            >
-              <img
-                src={`/smItem${i + 1}.avif`}
-                className="w-full h-full"
-                alt="Image of card "
-              />
+        {/* section forth */}
+        <section className="w-full space-y-5  py-10 pl-[4.5rem] pr-[2.5rem] md:px-10">
+          <h1 className="text-[24px] font-semibold">Rolling paper</h1>
+          <div className="flex w-full gap-5 ">
+            <div className="w-full overflow-hidden">
+              <Carousel responsive={responsive}>
+                {forthSectionCards.map((item, i) => (
+                  <Card item={item} key={i} />
+                ))}
+              </Carousel>
             </div>
-          ))}
+          </div>
         </section>
-      )}
-      {/* section third */}
-      <section className="w-full space-y-5  py-10 pl-[4.5rem] pr-[2.5rem] md:px-10">
-        <h1 className="text-[24px] font-semibold">Rolling paper</h1>
-        <div className="flex w-full gap-10 md:gap-5">
-          <div className="w-full overflow-hidden">
-            <Carousel responsive={responsive}>
-              {thirdSectionCards.map((item, i) => (
-                <Card item={item} key={i} />
-              ))}
-            </Carousel>
+        {/* section fifth */}
+        <section className="w-full space-y-5  py-10 pl-[4.5rem] pr-[2.5rem] md:px-10">
+          <h1 className="text-[24px] font-semibold">Mouth fresheners</h1>
+          <div className="flex w-full gap-5 ">
+            <div className="w-full overflow-hidden">
+              <Carousel responsive={responsive}>
+                {fifthSectionCards.map((item, i) => (
+                  <Card item={item} key={i} />
+                ))}
+              </Carousel>
+            </div>
           </div>
-        </div>
-      </section>
-      {/* section forth */}
-      <section className="w-full space-y-5  py-10 pl-[4.5rem] pr-[2.5rem] md:px-10">
-        <h1 className="text-[24px] font-semibold">Dairy, Bread & Eggs</h1>
-        <div className="flex w-full gap-5 ">
-          <div className="w-full overflow-hidden">
-            <Carousel responsive={responsive}>
-              {forthSectionCards.map((item, i) => (
-                <Card item={item} key={i} />
-              ))}
-            </Carousel>
-          </div>
-        </div>
-      </section>
-      {/* section fifth */}
-      <section className="w-full space-y-5  py-10 pl-[4.5rem] pr-[2.5rem] md:px-10">
-        <h1 className="text-[24px] font-semibold">Mouth fresheners</h1>
-        <div className="flex w-full gap-5 ">
-          <div className="w-full overflow-hidden">
-            <Carousel responsive={responsive}>
-              {fifthSectionCards.map((item, i) => (
-                <Card item={item} key={i} />
-              ))}
-            </Carousel>
-          </div>
-        </div>
-      </section>
-      {movieView ? <MobileFooter/> :<Footer />  }
+        </section>
+        {movieView ? <MobileFooter /> : <Footer />}
+      </div>
     </>
   );
 }

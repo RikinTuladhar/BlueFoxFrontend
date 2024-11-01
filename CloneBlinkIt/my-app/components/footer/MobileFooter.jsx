@@ -53,7 +53,7 @@ const MobileFooter = () => {
           </div>
           <div>
             <h3 className="text-[18px] font-semibold my-3 mb-5">
-              Useful Links
+              Categorie 
             </h3>
             <div className="flex justify-between w-full">
               <div>
