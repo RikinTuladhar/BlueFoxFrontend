@@ -1,11 +1,16 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { Search, ShoppingCart } from "lucide-react";
+import { useSelector, useDispatch } from "react-redux";
+import { handleUsersLocation } from "@/slices/UserSlice";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
+  const user = useSelector((s) => s?.user || "");
+  console.log(user);
   const [isClicked, setIsClicked] = useState(false);
-  const [location, setLocation] = useState("No Location Set");
+
   const [errorMessage, setErrorMessage] = useState("");
 
   function showLocationPopUpChild() {
@@ -34,26 +39,33 @@ const Navbar = () => {
   // Function to get readable address from latitude and longitude
   async function getReadableAddress(latitude, longitude) {
     try {
-      const response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`);
+      const response = await fetch(
+        `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
+      );
       const data = await response.json();
       if (data && data.display_name) {
         const address = data.display_name; // Get the full address
         // alert(`Your location is: ${address}`);
-        const array =  address.split(",")
-        const location = array[1] + ","+ array[2]
-        setLocation(location); // Set location to formatted address
+        const array = address.split(",");
+        const location = array[1] + "," + array[2];
+        dispatch(handleUsersLocation(location));
+        // setLocation(location); // Set location to formatted address
         setErrorMessage(""); // Clear any previous error messages
-        isClicked && setIsClicked(false)
+        isClicked && setIsClicked(false);
       } else {
-        alert("Unable to find address for this location.");
+        // alert("Unable to find address for this location.");
         setErrorMessage("Unable to find address for this location.");
       }
     } catch (error) {
       console.error("Error fetching address:", error);
-      alert("Could not retrieve location details.");
+      // alert("Could not retrieve location details.");
       setErrorMessage("Could not retrieve location details.");
     }
   }
+
+  useEffect(() => {
+    detectLocation();
+  }, [user.location]);
 
   return (
     <div className="fixed flex items-center z-50 bg-[#f4f6fc] w-full h-24 gap-10 border-b">
@@ -63,8 +75,10 @@ const Navbar = () => {
         </div>
         <div className="relative flex justify-center items-center w-[20rem] h-full">
           <div>
-            <h3 className="text-[18px] font-extrabold">Delivery in 13 minutes</h3>
-            <h5 className="font-normal text-[13px]">{location}</h5>
+            <h3 className="text-[18px] font-extrabold">
+              Delivery in 13 minutes
+            </h3>
+            <h5 className="font-normal text-[13px]">{user?.location}</h5>
             <div className="absolute right-10 bottom-5">
               <IoMdArrowDropdown onClick={showLocationPopUpChild} size={25} />
             </div>
@@ -100,7 +114,9 @@ const Navbar = () => {
               X
             </div>
             <div className="w-full px-5">
-              <h5 className="text-[14px] text-[#333] font-medium">Change Location</h5>
+              <h5 className="text-[14px] text-[#333] font-medium">
+                Change Location
+              </h5>
             </div>
             <div className="flex items-center w-full gap-3 px-5">
               <button
@@ -119,7 +135,9 @@ const Navbar = () => {
               />
             </div>
             {errorMessage && (
-              <div className="text-red-500 text-[12px] mt-2 px-5">{errorMessage}</div>
+              <div className="text-red-500 text-[12px] mt-2 px-5">
+                {errorMessage}
+              </div>
             )}
           </div>
         </div>
