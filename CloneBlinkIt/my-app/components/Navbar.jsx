@@ -7,9 +7,9 @@ import { handleUsersLocation } from "@/slices/UserSlice";
 import { MoveLeft } from "lucide-react";
 import { X } from "lucide-react";
 import { ChevronRight } from "lucide-react";
-import { ScrollText } from 'lucide-react';
-import { Bike } from 'lucide-react';
-import { ShoppingBag } from 'lucide-react';
+import { ScrollText } from "lucide-react";
+import { Bike } from "lucide-react";
+import { ShoppingBag } from "lucide-react";
 const Navbar = () => {
   const searchItem = [
     `Search "chips" `,
@@ -90,6 +90,23 @@ const Navbar = () => {
   useEffect(() => {
     detectLocation();
   }, [user.location]);
+
+  const [mobileNumber, setMobileNumber] = useState("");
+  console.log(mobileNumber);
+  function handleMobileNumber(e) {
+    const value = e.target.value;
+    const reg = /^[0-9]*$/;
+    if (reg.test(value) && value.length < 11) {
+      setMobileNumber(value);
+    }
+  }
+
+  function handleLogin(e) {
+    if (mobileNumber.length == 10) {
+      alert("Submited");
+    }
+    return;
+  }
 
   return (
     <div className="fixed flex items-center z-[10000] bg-[#f4f6fc] w-full h-24 gap-10 border-b">
@@ -176,7 +193,7 @@ const Navbar = () => {
       )}
 
       {isLoginClicked && (
-        <div className="fixed flex justify-center items-center  inset-0 z-40 bg-black bg-opacity-30 backdrop-blur-none">
+        <div className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-30 backdrop-blur-none">
           <div className="bg-[#ffffff] rounded-xl pt-8 relative space-y-3  flex flex-col justify-center items-center  w-[36rem] h-[20rem]">
             <div
               className="absolute top-5 left-5"
@@ -187,9 +204,9 @@ const Navbar = () => {
             </div>
             <div className="w-full flex justify-center items-center flex-col h-[90%] px-5">
               <img src="/favicon.png" alt="Blink it" className="size-16" />
-              <div className="space-y-2 py-2">
+              <div className="py-2 space-y-2">
                 <h2 className="text-2xl font-bold">India's Last minute app</h2>
-                <h5 className=" text-center">Log in or Sign up</h5>
+                <h5 className="text-center ">Log in or Sign up</h5>
               </div>
 
               <div className="space-y-5">
@@ -199,13 +216,18 @@ const Navbar = () => {
                   </span>
                   <input
                     type="text"
-                    className="px-14 py-3 font-bold border rounded-lg"
+                    className="py-3 font-bold border rounded-lg px-14"
                     placeholder="Enter mobile number"
                     name="Mobile Number"
+                    value={mobileNumber}
+                    onChange={handleMobileNumber}
                   />
                 </div>
                 <div className="w-full">
-                  <button className="w-full  py-3 text-white rounded-lg bg-[#9C9C9C]">
+                  <button
+                    onClick={handleLogin}
+                    className="w-full  py-3 text-white rounded-lg bg-[#9C9C9C]"
+                  >
                     Continue
                   </button>
                 </div>
@@ -223,9 +245,9 @@ const Navbar = () => {
       )}
 
       {isCartOpen && (
-        <div className="fixed flex justify-center items-center  inset-0 z-40 bg-black bg-opacity-30 backdrop-blur-none">
+        <div className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-30 backdrop-blur-none">
           <div className="w-[400px] overflow-y-auto absolute right-0 py-5  bg-white h-full">
-            <div className="flex justify-between py-3 px-3">
+            <div className="flex justify-between px-3 py-3">
               <div className="font-bold">My Cart</div>
               <div onClick={() => setIsCartOpen(!isCartOpen)}>
                 {" "}
@@ -234,8 +256,8 @@ const Navbar = () => {
             </div>
             <hr />
             <div className="bg-[#f5f7fd]  py-5 px-2 space-y-10">
-              <div className="rounded-2xl py-5 bg-white space-y-7 h-full w-full ">
-                <div className="w-full flex h-[3rem] px-3 pt-3 pb-3 space-x-2">
+              <div className="w-full h-full py-5 bg-white rounded-2xl space-y-7 ">
+                <div className="w-full flex h-[3rem] px-3 pt-3 pb-5 space-x-3">
                   <div className="h-[3rem]">
                     <img
                       src="/15-mins-filled.png"
@@ -243,25 +265,29 @@ const Navbar = () => {
                       alt="Timer icon"
                     />
                   </div>
-                  <div>
+                  <div className="space-y-1">
                     <h2 className="font-bold">Delivery in 11 minutes</h2>
-                    <p>Ship of 2 items</p>
+                    <p className="text-sm">Ship of 2 items</p>
                   </div>
                 </div>
                 {/* item show case  */}
-                <div className="w-full flex px-2  items-center justify-between">
+                <div className="flex items-center justify-between w-full px-5">
                   <div className="flex gap-3">
                     <div className="w-[30%] ">
-                      <img src="" alt="image of the item" />
+                      <img
+                        src="/images/notfound.jpg"
+                        onError={(e) => (e.target.src = "/images/notfound.jpg")}
+                        alt="image of the item"
+                      />
                     </div>
-                    <div className="w-auto ">
+                    <div className="w-auto text-xs ">
                       <p className="text-sm">Amul Taaza Toned</p>
                       <p className="text-sm">Fresh Milk</p>
                       <p className="text-gray-600">500ml</p>
                       <p className="text-sm font-bold">price</p>
                     </div>
                   </div>
-                  <div className="w-[20%] bg-primary  py-2 px-1 justify-around rounded-md text-white items-center flex">
+                  <div className="w-[50%] bg-primary  py-1 px-1 justify-around rounded-md text-white items-center flex">
                     <button>-</button>
                     <div>1</div>
                     <button>+</button>
@@ -273,35 +299,42 @@ const Navbar = () => {
                 <div>
                   <h3 className="font-bold">Bill details</h3>
                 </div>
-                <div className="py-2 px-1">
-                  <div className="text-xs justify-between px-1 flex">
+                <div className="px-1 py-2">
+                  <div className="flex justify-between px-1 text-xs">
                     <div className="flex items-center gap-2">
-                      <div><ScrollText /></div>
+                      <div>
+                        <ScrollText />
+                      </div>
                       <h5>Items total</h5>
                     </div>
                     <h5>Price</h5>
                   </div>
                 </div>
-                <div className="py-1 px-1 ">
-                  <div className="text-xs justify-between px-1 flex">
+                <div className="px-1 py-1 ">
+                  <div className="flex justify-between px-1 text-xs">
                     <div className="flex items-center gap-2">
-                      <div><Bike /></div>
+                      <div>
+                        <Bike />
+                      </div>
                       <h5>Delivery charge</h5>
                     </div>
                     <h5>Price</h5>
                   </div>
                 </div>
-                <div className="py-1 px-1 ">
-                  <div className="text-xs justify-between px-1 flex">
+                <div className="px-1 py-1 ">
+                  <div className="flex justify-between px-1 text-xs">
                     <div className="flex items-center gap-2">
-                      <div> <ShoppingBag /></div>
+                      <div>
+                        {" "}
+                        <ShoppingBag />
+                      </div>
                       <h5>Handling charge</h5>
                     </div>
                     <h5>Price</h5>
                   </div>
                 </div>
-                <div className="py-1 px-1 ">
-                  <div className=" font-bold justify-between px-1 flex">
+                <div className="px-1 py-1 ">
+                  <div className="flex justify-between px-1 font-bold ">
                     <h5>Grand Total</h5>
                     <h5>Price</h5>
                   </div>
@@ -315,8 +348,8 @@ const Navbar = () => {
                   unexpected delays, a refund will be provided, if applicable.
                 </p>
               </div>
-              <div className="w-full py-5 px-2">
-                <div className="bg-primary flex  justify-between items-center rounded-lg px-3 py-2 text-white ">
+              <div className="w-full px-2 py-5">
+                <div className="flex items-center justify-between px-3 py-2 text-white rounded-lg bg-primary ">
                   <div className="flex flex-col">
                     <span className="font-bold">$60</span>
                     <span>Total</span>

@@ -9,6 +9,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 export default function Home() {
   const [movieView, setMobileView] = useState(true);
+  const[showLogin,setShowLogin] = useState(false)
   const [movieViewItems, setMovieViewItems] = useState([
     {
       title: "Vegitables & Fruits",
@@ -300,16 +301,67 @@ export default function Home() {
     },
     mobile: {
       breakpoint: { max: 464, min: 0 },
-      items: 1,
+      items: 2,
     },
   };
+
+  function handleLoginPage(state){
+    setShowLogin(state)
+  }
+
+
+  if(showLogin){
+    return(
+      <div className="w-full h-[100vh] bg-green-200">
+        <div><button>-</button></div>
+        <div>
+          <img src="" alt="Blink It" />
+        </div>
+        <div>
+          <h1>India's last minite app</h1>
+        </div>
+        <p>Log in or Sign up</p>
+        <div>
+          <input type="text" placeholder="Enter Mobile Number" />
+        </div>
+        <div>
+          Continue
+        </div>
+      </div>
+    )
+  }
+
   return (
     <>
-      {movieView ? <MobileNavbar /> : <Navbar />}
+      {movieView ? <MobileNavbar handleLoginPage={handleLoginPage} /> : <Navbar />}
 
       <div className="w-full pt-20">
+        {movieView && (
+          <div className="px-2">
+            <img
+              src="https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=540/layout-engine/2024-02/android_feed_mweb-1.png"
+              alt=""
+            />
+          </div>
+        )}
+
+        {movieView && (
+          <section className="w-full py-10 pl-5 space-y-2 md:px-10">
+            <h1 className="text-xl font-bold">Best Seller</h1>
+            <div className="flex w-full md:gap-5">
+              <div className="w-full space-x-10 overflow-hidden">
+                <Carousel responsive={responsive}>
+                  {thirdSectionCards.map((item, i) => (
+                    <Card item={item} key={i} />
+                  ))}
+                </Carousel>
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* Section one */}
-        <section className="hidden w-full px-5 py-5 md:block">
+        <section className="hidden w-full px-5 py-2 md:py-5 md:block">
           <div className="w-full h-[14rem] ">
             <img src="/homeimg1.webp" className="w-full h-full" alt="image" />
           </div>
@@ -338,8 +390,9 @@ export default function Home() {
           </div>
         </section>
         {/* section second  */}
+       {movieView &&  <h1 className="pl-3 text-xl font-bold">Shop by category</h1>}
         {movieView ? (
-          <section className="grid w-full grid-cols-4 gap-2 px-3 py-2 mt-16 md:mt-0 md:px-5 md:grid-cols-10 ">
+          <section className="grid w-full grid-cols-4 gap-2 px-3 py-2 md:mt-0 md:px-5 md:grid-cols-10 ">
             {movieViewItems.map((m, i) => (
               <div key={i}>
                 <div className="w-[5rem] bg-[#E5F3F3]  rounded-xl  md:w-[8rem]  md:h-[12rem]">
@@ -370,10 +423,10 @@ export default function Home() {
           </section>
         )}
         {/* section third */}
-        <section className="w-full space-y-5  py-10 pl-[4.5rem] pr-[2.5rem] md:px-10">
-          <h1 className="text-[24px] font-semibold">Dairy, Bread & Eggs</h1>
-          <div className="flex w-full gap-10 md:gap-5">
-            <div className="w-full overflow-hidden">
+        <section className="w-full py-10 pl-5 space-y-2 md:px-10">
+          <h1 className="text-xl font-bold">Best Seller</h1>
+          <div className="flex w-full md:gap-5">
+            <div className="w-full space-x-10 overflow-hidden">
               <Carousel responsive={responsive}>
                 {thirdSectionCards.map((item, i) => (
                   <Card item={item} key={i} />
@@ -383,10 +436,10 @@ export default function Home() {
           </div>
         </section>
         {/* section forth */}
-        <section className="w-full space-y-5  py-10 pl-[4.5rem] pr-[2.5rem] md:px-10">
-          <h1 className="text-[24px] font-semibold">Rolling paper</h1>
-          <div className="flex w-full gap-5 ">
-            <div className="w-full overflow-hidden">
+        <section className="w-full py-10 pl-5 space-y-2 md:px-10">
+          <h1 className="text-xl font-bold">Best Seller</h1>
+          <div className="flex w-full md:gap-5">
+            <div className="w-full space-x-10 overflow-hidden">
               <Carousel responsive={responsive}>
                 {forthSectionCards.map((item, i) => (
                   <Card item={item} key={i} />
@@ -396,10 +449,10 @@ export default function Home() {
           </div>
         </section>
         {/* section fifth */}
-        <section className="w-full space-y-5  py-10 pl-[4.5rem] pr-[2.5rem] md:px-10">
-          <h1 className="text-[24px] font-semibold">Mouth fresheners</h1>
-          <div className="flex w-full gap-5 ">
-            <div className="w-full overflow-hidden">
+        <section className="w-full py-10 pl-5 space-y-2 md:px-10">
+          <h1 className="text-xl font-bold">Best Seller</h1>
+          <div className="flex w-full md:gap-5">
+            <div className="w-full space-x-10 overflow-hidden">
               <Carousel responsive={responsive}>
                 {fifthSectionCards.map((item, i) => (
                   <Card item={item} key={i} />

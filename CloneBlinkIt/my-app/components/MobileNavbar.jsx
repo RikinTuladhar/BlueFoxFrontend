@@ -5,11 +5,14 @@ import { FaRegCircleUser } from "react-icons/fa6";
 import { Search } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";
 import { handleUsersLocation } from "@/slices/UserSlice";
-const MobileNavbar = () => {
+const MobileNavbar = ({handleLoginPage}) => {
   const dispatch = useDispatch();
 
   const [errorMessage, setErrorMessage] = useState("");
   const user = useSelector((s) => s?.user || "");
+
+  const [showLogin,setShowLogin] = useState(false)
+
   console.log(user);
   const [isClicked, setIsClicked] = useState(false);
   function showLocationPopUpChild() {
@@ -65,6 +68,11 @@ const MobileNavbar = () => {
   useEffect(() => {
     detectLocation();
   }, [user.location]);
+
+
+
+
+
   return (
     <div className="w-full   h-[5rem] ">
       <div className="flex w-full h-full">
@@ -77,7 +85,10 @@ const MobileNavbar = () => {
             <IoMdArrowDropdown onClick={showLocationPopUpChild} size={22} />
           </div>
         </div>
-        <div className="w-[20%] grid place-items-center h-full ">
+        <div onClick={e=>{
+          setShowLogin(!showLogin)
+          handleLoginPage(showLogin)
+        }} className="w-[20%]   grid place-items-center h-full ">
           <FaRegCircleUser size={28} />
         </div>
       </div>
@@ -112,11 +123,11 @@ const MobileNavbar = () => {
               >
                 Detect my location
               </button>
-             <div className="flex items-center justify-center w-full">
-             <button className="px-4 py-2 text-[12px] text-[#333] bg-gray-200 rounded-full">
-                OR
-              </button>
-             </div>
+              <div className="flex items-center justify-center w-full">
+                <button className="px-4 py-2 text-[12px] text-[#333] bg-gray-200 rounded-full">
+                  OR
+                </button>
+              </div>
               <input
                 type="text"
                 className="p-[12px] bg-white w-full text-black h-[40px] border rounded-xl"
