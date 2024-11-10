@@ -1,23 +1,40 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { Search, ShoppingCart } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";
 import { handleUsersLocation } from "@/slices/UserSlice";
-
+import { MoveLeft } from "lucide-react";
+import { X } from "lucide-react";
+import { ChevronRight } from "lucide-react";
+import { ScrollText } from 'lucide-react';
+import { Bike } from 'lucide-react';
+import { ShoppingBag } from 'lucide-react';
 const Navbar = () => {
+  const searchItem = [
+    `Search "chips" `,
+    `Search "curd"`,
+    `Search "milk"`,
+    `Search "sugar"`,
+    `Search "rice"`,
+    `Search "egg"`,
+  ];
+
+  const searchingRef = useRef(null); // Ref to the input element to directly set placeholder
+  const currentIndexRef = useRef(0); // Ref to store current index for search text
+
   const dispatch = useDispatch();
   const user = useSelector((s) => s?.user || "");
-  console.log(user);
-  const [isClicked, setIsClicked] = useState(false);
 
+  const [isClicked, setIsClicked] = useState(false);
+  const [isLoginClicked, setIsLogInClicked] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
   function showLocationPopUpChild() {
     setIsClicked(!isClicked);
   }
 
-  // Function to detect user location and get readable address
   function detectLocation() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -36,7 +53,6 @@ const Navbar = () => {
     }
   }
 
-  // Function to get readable address from latitude and longitude
   async function getReadableAddress(latitude, longitude) {
     try {
       const response = await fetch(
@@ -44,31 +60,39 @@ const Navbar = () => {
       );
       const data = await response.json();
       if (data && data.display_name) {
-        const address = data.display_name; // Get the full address
-        // alert(`Your location is: ${address}`);
+        const address = data.display_name;
         const array = address.split(",");
         const location = array[1] + "," + array[2];
         dispatch(handleUsersLocation(location));
-        // setLocation(location); // Set location to formatted address
-        setErrorMessage(""); // Clear any previous error messages
+        setErrorMessage("");
         isClicked && setIsClicked(false);
       } else {
-        // alert("Unable to find address for this location.");
         setErrorMessage("Unable to find address for this location.");
       }
     } catch (error) {
       console.error("Error fetching address:", error);
-      // alert("Could not retrieve location details.");
       setErrorMessage("Could not retrieve location details.");
     }
   }
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      currentIndexRef.current =
+        (currentIndexRef.current + 1) % searchItem.length;
+      if (searchingRef.current) {
+        searchingRef.current.placeholder = searchItem[currentIndexRef.current];
+      }
+    }, 1000);
+
+    return () => clearInterval(interval); // Cleanup the interval on component unmount
+  }, []);
 
   useEffect(() => {
     detectLocation();
   }, [user.location]);
 
   return (
-    <div className="fixed flex items-center z-50 bg-[#f4f6fc] w-full h-24 gap-10 border-b">
+    <div className="fixed flex items-center z-[10000] bg-[#f4f6fc] w-full h-24 gap-10 border-b">
       <div className="flex h-full">
         <div className="w-[12rem] border-r flex justify-center h-[100%] items-center">
           <img src="/logo.svg" alt="Logo" />
@@ -90,20 +114,28 @@ const Navbar = () => {
           <Search size={21} />
         </div>
         <input
+          ref={searchingRef} // Assign ref to the input element
           type="text"
           className="rounded-xl bg-[#f8f8f8] border text-[#828282] w-full pl-12 py-3"
-          placeholder="Search"
+          placeholder={searchItem[0]} // Initial placeholder
         />
       </div>
       <div className="flex w-[20%] items-center justify-between px-5 h-full">
-        <div className="text-[18px] font-normal">Login</div>
-        <div className="flex gap-2 bg-[#0c831f] px-3 py-4 text-[14px] text-white rounded-[8px]">
+        <div
+          className="text-[18px] font-normal"
+          onClick={(e) => setIsLogInClicked(!isLoginClicked)}
+        >
+          Login
+        </div>
+        <div
+          onClick={() => setIsCartOpen(!isCartOpen)}
+          className="flex gap-2 bg-[#0c831f] px-3 py-4 text-[14px] text-white rounded-[8px]"
+        >
           <ShoppingCart />
           <div>My Cart</div>
         </div>
       </div>
 
-      {/* Overlay with blur effect */}
       {isClicked && (
         <div className="fixed inset-0 z-40 bg-black bg-opacity-30 backdrop-blur-none">
           <div className="w-[32rem] absolute border space-y-3 px-1 py-10 flex-col justify-center items-center flex h-[8rem] top-[6rem] left-24 bg-[#f4f6fc] rounded-md z-50">
@@ -131,7 +163,7 @@ const Navbar = () => {
               <input
                 type="text"
                 className="p-[12px] bg-white w-[200px] text-black h-[40px] border rounded-xl"
-                placeholder="search delivery"
+                placeholder={searchingRef.current.placeholder}
               />
             </div>
             {errorMessage && (
@@ -139,6 +171,163 @@ const Navbar = () => {
                 {errorMessage}
               </div>
             )}
+          </div>
+        </div>
+      )}
+
+      {isLoginClicked && (
+        <div className="fixed flex justify-center items-center  inset-0 z-40 bg-black bg-opacity-30 backdrop-blur-none">
+          <div className="bg-[#ffffff] rounded-xl pt-8 relative space-y-3  flex flex-col justify-center items-center  w-[36rem] h-[20rem]">
+            <div
+              className="absolute top-5 left-5"
+              onClick={() => setIsLogInClicked(!isLoginClicked)}
+            >
+              {" "}
+              <MoveLeft size={20} />
+            </div>
+            <div className="w-full flex justify-center items-center flex-col h-[90%] px-5">
+              <img src="/favicon.png" alt="Blink it" className="size-16" />
+              <div className="space-y-2 py-2">
+                <h2 className="text-2xl font-bold">India's Last minute app</h2>
+                <h5 className=" text-center">Log in or Sign up</h5>
+              </div>
+
+              <div className="space-y-5">
+                <div className="relative">
+                  <span className="absolute top-[0.8rem] left-2 font-bold">
+                    + 91
+                  </span>
+                  <input
+                    type="text"
+                    className="px-14 py-3 font-bold border rounded-lg"
+                    placeholder="Enter mobile number"
+                    name="Mobile Number"
+                  />
+                </div>
+                <div className="w-full">
+                  <button className="w-full  py-3 text-white rounded-lg bg-[#9C9C9C]">
+                    Continue
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div className="w-full h-auto py-4 rounded-b-xl bg-[#fbfbfb]">
+              <p className="text-center text-[0.90rem]">
+                By counting, you agree to our{" "}
+                <span className="underline">Terms of service</span> &{" "}
+                <span className="underline">Privacy policy</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {isCartOpen && (
+        <div className="fixed flex justify-center items-center  inset-0 z-40 bg-black bg-opacity-30 backdrop-blur-none">
+          <div className="w-[400px] overflow-y-auto absolute right-0 py-5  bg-white h-full">
+            <div className="flex justify-between py-3 px-3">
+              <div className="font-bold">My Cart</div>
+              <div onClick={() => setIsCartOpen(!isCartOpen)}>
+                {" "}
+                <X size={20} />
+              </div>
+            </div>
+            <hr />
+            <div className="bg-[#f5f7fd]  py-5 px-2 space-y-10">
+              <div className="rounded-2xl py-5 bg-white space-y-7 h-full w-full ">
+                <div className="w-full flex h-[3rem] px-3 pt-3 pb-3 space-x-2">
+                  <div className="h-[3rem]">
+                    <img
+                      src="/15-mins-filled.png"
+                      className="w-full h-full"
+                      alt="Timer icon"
+                    />
+                  </div>
+                  <div>
+                    <h2 className="font-bold">Delivery in 11 minutes</h2>
+                    <p>Ship of 2 items</p>
+                  </div>
+                </div>
+                {/* item show case  */}
+                <div className="w-full flex px-2  items-center justify-between">
+                  <div className="flex gap-3">
+                    <div className="w-[30%] ">
+                      <img src="" alt="image of the item" />
+                    </div>
+                    <div className="w-auto ">
+                      <p className="text-sm">Amul Taaza Toned</p>
+                      <p className="text-sm">Fresh Milk</p>
+                      <p className="text-gray-600">500ml</p>
+                      <p className="text-sm font-bold">price</p>
+                    </div>
+                  </div>
+                  <div className="w-[20%] bg-primary  py-2 px-1 justify-around rounded-md text-white items-center flex">
+                    <button>-</button>
+                    <div>1</div>
+                    <button>+</button>
+                  </div>
+                </div>
+              </div>
+
+              <div className="rounded-2xl px-1 bg-white py-2 w-full min-h-[8rem]">
+                <div>
+                  <h3 className="font-bold">Bill details</h3>
+                </div>
+                <div className="py-2 px-1">
+                  <div className="text-xs justify-between px-1 flex">
+                    <div className="flex items-center gap-2">
+                      <div><ScrollText /></div>
+                      <h5>Items total</h5>
+                    </div>
+                    <h5>Price</h5>
+                  </div>
+                </div>
+                <div className="py-1 px-1 ">
+                  <div className="text-xs justify-between px-1 flex">
+                    <div className="flex items-center gap-2">
+                      <div><Bike /></div>
+                      <h5>Delivery charge</h5>
+                    </div>
+                    <h5>Price</h5>
+                  </div>
+                </div>
+                <div className="py-1 px-1 ">
+                  <div className="text-xs justify-between px-1 flex">
+                    <div className="flex items-center gap-2">
+                      <div> <ShoppingBag /></div>
+                      <h5>Handling charge</h5>
+                    </div>
+                    <h5>Price</h5>
+                  </div>
+                </div>
+                <div className="py-1 px-1 ">
+                  <div className=" font-bold justify-between px-1 flex">
+                    <h5>Grand Total</h5>
+                    <h5>Price</h5>
+                  </div>
+                </div>
+              </div>
+
+              <div className="rounded-2xl px-3 py-5 bg-white w-full min-h-[5rem]">
+                <h3 className="font-bold">Cancellation Policy</h3>
+                <p className="text-xs">
+                  Order cannot be cancelled once pacekd for deliver. In case of
+                  unexpected delays, a refund will be provided, if applicable.
+                </p>
+              </div>
+              <div className="w-full py-5 px-2">
+                <div className="bg-primary flex  justify-between items-center rounded-lg px-3 py-2 text-white ">
+                  <div className="flex flex-col">
+                    <span className="font-bold">$60</span>
+                    <span>Total</span>
+                  </div>
+                  <div className="flex">
+                    <span>Login to Proceed</span>
+                    <ChevronRight />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       )}
