@@ -4,6 +4,7 @@ import Footer from "@/components/footer/Footer";
 import MobileFooter from "@/components/footer/MobileFooter";
 import MobileNavbar from "@/components/MobileNavbar";
 import Navbar from "@/components/Navbar";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
@@ -409,7 +410,8 @@ export default function Home() {
         ) : (
           <section className="grid w-full grid-cols-4 gap-2 px-3 py-2 mt-16 md:mt-0 md:px-8 md:grid-cols-10 place-items-center ">
             {Array.from({ length: 20 }).map((_, i) => (
-              <div
+              <Link
+              href={`/category/${i}`}
                 key={i}
                 className="w-[7rem] h-[8rem] md:w-[8rem]  md:h-[12rem]"
               >
@@ -418,7 +420,7 @@ export default function Home() {
                   className="w-full h-full"
                   alt="Image of card "
                 />
-              </div>
+              </Link>
             ))}
           </section>
         )}

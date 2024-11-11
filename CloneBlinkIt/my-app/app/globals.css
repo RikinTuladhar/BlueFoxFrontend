@@ -36,3 +36,26 @@
   right: -0.5rem;
   background-color: #ccc;
 }
+
+
+
+@keyframes placeHolderMover {
+  0% {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-10px);
+    opacity: 0.1;
+  }
+}
+
+.placeholder-move {
+  animation: placeHolderMover 1.5s ease-in-out infinite;
+  /* Optional: Control color or style if needed */
+}
+

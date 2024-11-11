@@ -75,18 +75,27 @@ const Navbar = () => {
     }
   }
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      currentIndexRef.current =
-        (currentIndexRef.current + 1) % searchItem.length;
-      if (searchingRef.current) {
-        searchingRef.current.placeholder = searchItem[currentIndexRef.current];
-      }
-    }, 1000);
+  const [placeholderText, setPlaceholderText] = useState(searchItem[0]);
+  
 
-    return () => clearInterval(interval); // Cleanup the interval on component unmount
+
+  const [animate, setAnimate] = useState(false);
+  useEffect(() => {
+    let index = 0;
+    
+    const interval = setInterval(() => {
+      setAnimate(true); // Start the animation
+      index = (index + 1) % searchItem.length; // Loop through items
+      setPlaceholderText(searchItem[index]);
+
+      // Reset animation
+      setTimeout(() => setAnimate(false), 1400);
+    }, 1500);
+
+    return () => clearInterval(interval); // Cleanup on unmount
   }, []);
 
+  
   useEffect(() => {
     detectLocation();
   }, [user.location]);
@@ -109,7 +118,7 @@ const Navbar = () => {
   }
 
   return (
-    <div className="fixed flex items-center z-[10000] bg-[#f4f6fc] w-full h-24 gap-10 border-b">
+    <div className="fixed flex justify-between items-center z-[10000] bg-[#f4f6fc] w-full h-[5.5rem] gap-10 border-b">
       <div className="flex h-full">
         <div className="w-[12rem] border-r flex justify-center h-[100%] items-center">
           <img src="/logo.svg" alt="Logo" />
@@ -126,27 +135,31 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-      <div className="w-[28rem] relative">
+      <div className="w-[28rem] overflow-hidden relative">
         <div className="absolute left-[2%] top-[28%]">
           <Search size={21} />
+          
+        </div>
+        <div className="absolute w-full left-[12%] top-[28%]">
+        <span className="absolute text-gray-500 placeholder-move">{`${placeholderText}`}</span>
         </div>
         <input
-          ref={searchingRef} // Assign ref to the input element
           type="text"
-          className="rounded-xl bg-[#f8f8f8] border text-[#828282] w-full pl-12 py-3"
-          placeholder={searchItem[0]} // Initial placeholder
+          className={`rounded-xl bg-[#f8f8f8] border text-[#828282] w-full pl-12 py-3 `}
+         
         />
+       
       </div>
       <div className="flex w-[20%] items-center justify-between px-5 h-full">
         <div
-          className="text-[18px] font-normal"
+          className="text-[18px] cursor-pointer font-normal"
           onClick={(e) => setIsLogInClicked(!isLoginClicked)}
         >
           Login
         </div>
         <div
           onClick={() => setIsCartOpen(!isCartOpen)}
-          className="flex gap-2 bg-[#0c831f] px-3 py-4 text-[14px] text-white rounded-[8px]"
+          className="cursor-pointer flex gap-2 bg-[#0c831f] px-3 py-4 text-[14px] text-white rounded-[8px]"
         >
           <ShoppingCart />
           <div>My Cart</div>
@@ -211,8 +224,8 @@ const Navbar = () => {
 
               <div className="space-y-5">
                 <div className="relative">
-                  <span className="absolute top-[0.8rem] left-2 font-bold">
-                    + 91
+                  <span className="absolute top-[0.8rem] left-1 font-bold">
+                    + 977
                   </span>
                   <input
                     type="text"

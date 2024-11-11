@@ -18,7 +18,7 @@ const Footer = () => {
         <h2 className="text-[18px] font-semibold">Useful Links</h2>
         <div className="flex justify-between w-full px-2">
           <div>
-            <ul className="text-[14px]  text-[#666]">
+            <ul className="text-sm space-y-2 text-[#666]">
               <li>About</li>
               <li>Careers</li>
               <li>Blog</li>
@@ -28,7 +28,7 @@ const Footer = () => {
             </ul>
           </div>
           <div>
-            <ul className="text-[14px] text-[#666]">
+            <ul className="text-sm  space-y-2 text-[#666]">
               <li>Privacy</li>
               <li>Terms</li>
               <li>FAQs</li>
@@ -38,7 +38,7 @@ const Footer = () => {
             </ul>
           </div>
           <div>
-            <ul className="text-[14px] text-[#666]">
+            <ul className="text-sm  space-y-2 text-[#666]">
               <li>Partner</li>
               <li>Franchise</li>
               <li>Seller</li>
@@ -53,7 +53,7 @@ const Footer = () => {
         className="flex gap-5 pt-10 pb-5 "
         style={{ gridColumn: "2/5", gridRow: "1/1" }}
       >
-        <h2 className="text-[18px] font-semibold">Categories</h2>
+        <h2 className="text-sm font-semibold">Categories</h2>
         <p className="text-[#0C831F]">see all</p>
       </div>
       <div
@@ -61,7 +61,7 @@ const Footer = () => {
         style={{ gridColumn: "2/5", gridRow: "2/6" }}
       >
         <div>
-          <ul className="text-[14px] space-y-2  text-[#666]">
+          <ul className="text-sm space-y-2  text-[#666]">
             <li>Vegetables & Fruits</li>
             <li>Cold Drinks & Juices</li>
             <li>Bakery & Biscuits</li>
@@ -74,7 +74,7 @@ const Footer = () => {
           </ul>
         </div>
         <div>
-          <ul className="text-[14px]  space-y-2  text-[#666]">
+          <ul className="text-sm  space-y-2  text-[#666]">
             <li>Dairy & Breakfast</li>
             <li>Instant & Frozen Food</li>
             <li>Sweet Tooth</li>
@@ -87,7 +87,7 @@ const Footer = () => {
           </ul>
         </div>
         <div>
-          <ul className="text-[14px]  space-y-2  text-[#666]">
+          <ul className="text-sm  space-y-2  text-[#666]">
             <li>Munchies</li>
             <li>Tea, Coffee & Health Drinks</li>
             <li>Atta, Rice & Dal</li>
@@ -103,16 +103,16 @@ const Footer = () => {
       
     </footer>
    <div>
-   <div className="flex justify-center w-full text-xs ">
+   <div className="flex justify-center w-full text-sm ">
       <div className="w-[90%] h-full flex justify-center items-center  py-5 bg-[#fcfcfc]">
-        <div className="grid grid-cols-3 gap-16 place-items-center ">
-        <div>Blink Commerce Private Limited, 2016-2024</div>
+        <div className="grid grid-cols-3 gap-5 place-items-center ">
+        <div className="text-xs">&copy; Blink Commerce Private Limited, 2016-2024</div>
           <div className="flex items-center justify-center gap-5">
-            <span>Download App</span>
-            <div className="w-[5rem] h-[2rem]">
+            <span className="font-bold text-gray-500">Download App</span>
+            <div className="w-[6rem] h-[2rem]">
             <img src="/applestore.png" className="w-full h-full" alt="icon" />
             </div>
-            <div className="w-[5rem] h-[2rem]">
+            <div className="w-[6rem] h-[2rem]">
             <img src="/googleplay.png" className="w-full h-full" alt="icon" />
             </div>
           
@@ -127,8 +127,8 @@ const Footer = () => {
         </div>
       </div>
     </div>
-    <div className="flex items-center justify-center w-full py-2 text-xs ">
-      <span className="w-[88%] ">
+    <div className="flex items-center justify-center w-full py-2 text-sm ">
+      <span className="px-5 ">
       “Blinkit” is owned & managed by "Blink Commerce Private Limited" and is not related, linked or interconnected in whatsoever manner or nature, to “GROFFR.COM” which is a real estate services business operated by “Redstone Consultancy Services Private Limited”.
       </span>
     </div>
