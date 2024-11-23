@@ -10,6 +10,7 @@ import { ChevronRight } from "lucide-react";
 import { ScrollText } from "lucide-react";
 import { Bike } from "lucide-react";
 import { ShoppingBag } from "lucide-react";
+import Link from "next/link";
 const Navbar = () => {
   const searchItem = [
     `Search "chips" `,
@@ -120,9 +121,9 @@ const Navbar = () => {
   return (
     <div className="fixed flex justify-between items-center z-[10000] bg-[#f4f6fc] w-full h-[5.5rem] gap-10 border-b">
       <div className="flex h-full">
-        <div className="w-[12rem] border-r flex justify-center h-[100%] items-center">
+        <Link href={"/"} className="w-[12rem] border-r flex justify-center h-[100%] items-center">
           <img src="/logo.svg" alt="Logo" />
-        </div>
+        </Link>
         <div className="relative flex justify-center items-center w-[20rem] h-full">
           <div>
             <h3 className="text-[18px] font-extrabold">
@@ -193,7 +194,7 @@ const Navbar = () => {
               <input
                 type="text"
                 className="p-[12px] bg-white w-[200px] text-black h-[40px] border rounded-xl"
-                placeholder={searchingRef.current.placeholder}
+                // placeholder={searchingRef.current.placeholder}
               />
             </div>
             {errorMessage && (

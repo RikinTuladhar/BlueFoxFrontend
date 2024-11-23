@@ -1,7 +1,9 @@
+import Link from "next/link";
 import React from "react";
 
 const Card = ({ item }) => {
   return (
+    <Link href={`/product/${item.id}`}>
     <div className="w-[150px] md:w-[178px] rounded-lg pb-3 border ">
       <div className="w-full h-[50%] overflow-hidden bg-[#FEFFFE]">
         <img src={item?.img} className="object-contain w-full h-full" alt="" />
@@ -17,6 +19,7 @@ const Card = ({ item }) => {
         </div>
       </div>
     </div>
+    </Link>
   );
 };
 
