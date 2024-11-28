@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 // Corrected initial state definition
-const initialState  = {  // Change inital to initial
+const initialState = {
+  // Change inital to initial
   email: "",
   gender: "",
   location: "",
@@ -9,13 +10,15 @@ const initialState  = {  // Change inital to initial
 
 export const userSlice = createSlice({
   name: "User State",
-  initialState , // Change inital to initial
+  initialState, // Change inital to initial
   reducers: {
+  
     handleUsersLocation: (state, action) => {
       state.location = action.payload;
     },
   },
 });
 
-export const { handleUsersLocation } = userSlice.actions;
+export const { handleUsersLocation, fetchCartFromLocalStorage } =
+  userSlice.actions;
 export default userSlice.reducer;

@@ -6,14 +6,12 @@ import React, { useEffect, useState } from "react";
 
 const Page = ({ params }) => {
   const [id, setId] = useState("");
-  useEffect(
-    () =>
-      async function getId() {
-        const id = await params.id;
-        setId(id);
-      },
-    []
-  );
+  useEffect(() => {
+    async function getId() {
+      const id = await params.id;
+      setId(id);
+    }
+  }, []);
   const subHeadings = [
     {
       id: 1,
@@ -140,7 +138,7 @@ const ShowProducts = () => (
     </div>
     <div className="min-h-[100vh] grid bg-[#F4F6FB] grid-cols-5 gap-10 px-2 py-2 border">
       {Array.from({ length: 15 }).map((_, i) => (
-      <ProductsCard i={i} data={_}/>
+        <ProductsCard i={i} data={_} />
       ))}
     </div>
   </div>

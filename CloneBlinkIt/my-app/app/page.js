@@ -10,7 +10,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 export default function Home() {
   const [movieView, setMobileView] = useState(true);
-  const[showLogin,setShowLogin] = useState(false)
+  const [showLogin, setShowLogin] = useState(false);
   const [movieViewItems, setMovieViewItems] = useState([
     {
       title: "Vegitables & Fruits",
@@ -306,15 +306,16 @@ export default function Home() {
     },
   };
 
-  function handleLoginPage(state){
-    setShowLogin(state)
+  function handleLoginPage(state) {
+    setShowLogin(state);
   }
 
-
-  if(showLogin){
-    return(
+  if (showLogin) {
+    return (
       <div className="w-full h-[100vh] bg-green-200">
-        <div><button>-</button></div>
+        <div>
+          <button>-</button>
+        </div>
         <div>
           <img src="" alt="Blink It" />
         </div>
@@ -325,16 +326,18 @@ export default function Home() {
         <div>
           <input type="text" placeholder="Enter Mobile Number" />
         </div>
-        <div>
-          Continue
-        </div>
+        <div>Continue</div>
       </div>
-    )
+    );
   }
 
   return (
     <>
-      {movieView ? <MobileNavbar handleLoginPage={handleLoginPage} /> : <Navbar />}
+      {movieView ? (
+        <MobileNavbar handleLoginPage={handleLoginPage} />
+      ) : (
+        <Navbar />
+      )}
 
       <div className="w-full pt-20">
         {movieView && (
@@ -391,7 +394,9 @@ export default function Home() {
           </div>
         </section>
         {/* section second  */}
-       {movieView &&  <h1 className="pl-3 text-xl font-bold">Shop by category</h1>}
+        {movieView && (
+          <h1 className="pl-3 text-xl font-bold">Shop by category</h1>
+        )}
         {movieView ? (
           <section className="grid w-full grid-cols-4 gap-2 px-3 py-2 md:mt-0 md:px-5 md:grid-cols-10 ">
             {movieViewItems.map((m, i) => (
@@ -411,7 +416,7 @@ export default function Home() {
           <section className="grid w-full grid-cols-4 gap-2 px-3 py-2 mt-16 md:mt-0 md:px-8 md:grid-cols-10 place-items-center ">
             {Array.from({ length: 20 }).map((_, i) => (
               <Link
-              href={`/category/${i}`}
+                href={`/category/${i}`}
                 key={i}
                 className="w-[7rem] h-[8rem] md:w-[8rem]  md:h-[12rem]"
               >

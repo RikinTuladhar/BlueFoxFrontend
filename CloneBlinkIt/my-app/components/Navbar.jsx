@@ -11,7 +11,33 @@ import { ScrollText } from "lucide-react";
 import { Bike } from "lucide-react";
 import { ShoppingBag } from "lucide-react";
 import Link from "next/link";
+import useLocalstorage from "@/hooks/useLocalstorage";
+import { fetchCartFromLocalStorage } from "@/slices/CartSlice";
+import NavCards from "./cards/NavCards";
+
 const Navbar = () => {
+  const dispatch = useDispatch();
+  const { getCartItems } = useLocalstorage();
+  const [cartItems, setCartItems] = useState([]);
+  const [click, setClick] = useState(false);
+
+  const user = useSelector((s) => s?.user || "");
+
+  // console.log("Redux", cart);
+  const [isClicked, setIsClicked] = useState(false);
+  const [quantity, setQuantity] = useState(false);
+  const [isLoginClicked, setIsLogInClicked] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    setQuantity();
+    const cartItemsFromLocal = getCartItems();
+    setCartItems(cartItemsFromLocal);
+  }, [click]); // Removed 'click' from dependencies
+
+  // console.log("Redux", cart);
+
   const searchItem = [
     `Search "chips" `,
     `Search "curd"`,
@@ -20,17 +46,6 @@ const Navbar = () => {
     `Search "rice"`,
     `Search "egg"`,
   ];
-
-  const searchingRef = useRef(null); // Ref to the input element to directly set placeholder
-  const currentIndexRef = useRef(0); // Ref to store current index for search text
-
-  const dispatch = useDispatch();
-  const user = useSelector((s) => s?.user || "");
-
-  const [isClicked, setIsClicked] = useState(false);
-  const [isLoginClicked, setIsLogInClicked] = useState(false);
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
 
   function showLocationPopUpChild() {
     setIsClicked(!isClicked);
@@ -49,7 +64,7 @@ const Navbar = () => {
         }
       );
     } else {
-      console.log("Geolocation is not supported by this browser.");
+      // console.log("Geolocation is not supported by this browser.");
       setErrorMessage("Geolocation is not supported by this browser.");
     }
   }
@@ -77,13 +92,11 @@ const Navbar = () => {
   }
 
   const [placeholderText, setPlaceholderText] = useState(searchItem[0]);
-  
-
 
   const [animate, setAnimate] = useState(false);
   useEffect(() => {
     let index = 0;
-    
+
     const interval = setInterval(() => {
       setAnimate(true); // Start the animation
       index = (index + 1) % searchItem.length; // Loop through items
@@ -96,13 +109,12 @@ const Navbar = () => {
     return () => clearInterval(interval); // Cleanup on unmount
   }, []);
 
-  
   useEffect(() => {
     detectLocation();
-  }, [user.location]);
+  }, []);
 
   const [mobileNumber, setMobileNumber] = useState("");
-  console.log(mobileNumber);
+  // console.log(mobileNumber);
   function handleMobileNumber(e) {
     const value = e.target.value;
     const reg = /^[0-9]*$/;
@@ -121,7 +133,10 @@ const Navbar = () => {
   return (
     <div className="fixed flex justify-between items-center z-[10000] bg-[#f4f6fc] w-full h-[5.5rem] gap-10 border-b">
       <div className="flex h-full">
-        <Link href={"/"} className="w-[12rem] border-r flex justify-center h-[100%] items-center">
+        <Link
+          href={"/"}
+          className="w-[12rem] border-r flex justify-center h-[100%] items-center"
+        >
           <img src="/logo.svg" alt="Logo" />
         </Link>
         <div className="relative flex justify-center items-center w-[20rem] h-full">
@@ -139,17 +154,14 @@ const Navbar = () => {
       <div className="w-[28rem] overflow-hidden relative">
         <div className="absolute left-[2%] top-[28%]">
           <Search size={21} />
-          
         </div>
         <div className="absolute w-full left-[12%] top-[28%]">
-        <span className="absolute text-gray-500 placeholder-move">{`${placeholderText}`}</span>
+          <span className="absolute text-gray-500 placeholder-move">{`${placeholderText}`}</span>
         </div>
         <input
           type="text"
           className={`rounded-xl bg-[#f8f8f8] border text-[#828282] w-full pl-12 py-3 `}
-         
         />
-       
       </div>
       <div className="flex w-[20%] items-center justify-between px-5 h-full">
         <div
@@ -284,29 +296,9 @@ const Navbar = () => {
                     <p className="text-sm">Ship of 2 items</p>
                   </div>
                 </div>
-                {/* item show case  */}
-                <div className="flex items-center justify-between w-full px-5">
-                  <div className="flex gap-3">
-                    <div className="w-[30%] ">
-                      <img
-                        src="/images/notfound.jpg"
-                        onError={(e) => (e.target.src = "/images/notfound.jpg")}
-                        alt="image of the item"
-                      />
-                    </div>
-                    <div className="w-auto text-xs ">
-                      <p className="text-sm">Amul Taaza Toned</p>
-                      <p className="text-sm">Fresh Milk</p>
-                      <p className="text-gray-600">500ml</p>
-                      <p className="text-sm font-bold">price</p>
-                    </div>
-                  </div>
-                  <div className="w-[50%] bg-primary  py-1 px-1 justify-around rounded-md text-white items-center flex">
-                    <button>-</button>
-                    <div>1</div>
-                    <button>+</button>
-                  </div>
-                </div>
+                {cartItems?.map((cart, i) => (
+                  <NavCards cart={cart} key={i} />
+                ))}
               </div>
 
               <div className="rounded-2xl px-1 bg-white py-2 w-full min-h-[8rem]">
